@@ -1,4 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:another_brother_demo/print_api.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,7 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -58,10 +63,46 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: SpeedDial(
+        icon: Icons.add_task,
+        activeIcon: Icons.close,
+        spaceBetweenChildren: 16,
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.add),
+            onTap: () => _incrementCounter(),
+            label: 'Increment Counter',
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.print),
+            onTap: () async {
+              await PrintAPI.printText(
+                  context, 'You have pushed the button $_counter times');
+            },
+            label: 'Print text',
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.print),
+            onTap: () async {
+              await PrintAPI.printImage(
+                  context, 'assets/logo.png');
+            },
+            label: 'Print image',
+          ),
+          SpeedDialChild(
+            child: const Icon(Icons.print),
+            onTap: () async {
+              Directory tempDir = await getTemporaryDirectory();
+              String tempPath = tempDir.path;
+              File tempFile = File('$tempPath/copy.pdf');
+              ByteData bd = await rootBundle.load('assets/chart.pdf');
+              await tempFile.writeAsBytes(bd.buffer.asUint8List(), flush: true);
+              await PrintAPI.printText(
+                  context, tempFile.path);
+            },
+            label: 'Print PDF',
+          ),
+        ],
       ),
     );
   }

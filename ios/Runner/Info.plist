@@ -45,5 +45,35 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!-- Another Brother Section -->
+    <key>NSLocalNetworkUsageDescription</key>
+        <string>Looking for local tcp Bonjour service</string>
+        <key>NSBonjourServices</key>
+        <array>
+            <string>_ipp._tcp</string>
+            <string>_printer._tcp</string>
+            <string>_pdl-datastream._tcp</string>
+        </array>
+        <key>UIBackgroundModes</key>
+        <array>
+            <string>fetch</string>
+            <string>remote-notifications</string>
+        </array>
+        <key>NSBluetoothAlwaysUsageDescription</key>
+        <string>Need BLE permission to connect to printers to print receipts</string>
+        <key>NSBluetoothPeripheralUsageDescription</key>
+        <string>Need BLE permission to connect to printers to print receipts</string>
+        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>Need Location permission for bluetooth to be able to connect to printer to print receipts</string>
+        <key>NSLocationAlwaysUsageDescription</key>
+        <string>Need Location permission for bluetooth to be able to connect to printer to print receipts</string>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>Need Location permission for bluetooth to be able to connect to printer to print receipts</string>
+        <key>UISupportedExternalAccessoryProtocols</key>
+        <array>
+            <string>com.brother.ptcbp</string>
+            <string>com.issc.datapath</string>
+        </array>
+    <!-- End Another Brother Section -->
 </dict>
 </plist>
