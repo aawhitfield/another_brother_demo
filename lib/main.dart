@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: SpeedDial(
-        icon: Icons.add_task,
+        icon: Icons.more_horiz,
         activeIcon: Icons.close,
         spaceBetweenChildren: 16,
         children: [
@@ -97,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
               File tempFile = File('$tempPath/copy.pdf');
               ByteData bd = await rootBundle.load('assets/chart.pdf');
               await tempFile.writeAsBytes(bd.buffer.asUint8List(), flush: true);
-              await PrintAPI.printText(
+              await PrintAPI.printPDF(
                   context, tempFile.path);
             },
             label: 'Print PDF',

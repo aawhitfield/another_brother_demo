@@ -11,6 +11,17 @@ import 'package:permission_handler/permission_handler.dart';
 class PrintAPI {
   static Future<brother.Printer?> configurePrinter(BuildContext context) async {
     // get Bluetooth permission
+
+    if (!await Permission.bluetoothScan.request().isGranted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text("Access to bluetooth scan is needed in order print."),
+        ),
+      ));
+      return null;
+    }
+
     if (!await Permission.bluetoothConnect.request().isGranted) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Padding(
@@ -32,7 +43,7 @@ class PrintAPI {
     printInfo.align = brother.Align.CENTER;
 
     // set the label type
-    printInfo.labelNameIndex = QL1100.ordinalFromID(QL1100.W103.getId());
+    printInfo.labelNameIndex = QL1100.ordinalFromID(QL1100.W103H164.getId());
 
     // set the printer info so we can use the SDK to get the printers
     await printer.setPrinterInfo(printInfo);
@@ -73,8 +84,11 @@ class PrintAPI {
             ..addText(textToPrint);
 
       final ui.Paragraph paragraph = paragraphBuilder.build()
-        ..layout(ui.ParagraphConstraints(
-            width: MediaQuery.of(context).size.width - 12.0 - 12.0));
+        ..layout(
+          ui.ParagraphConstraints(
+            width: MediaQuery.of(context).size.width - 12.0 - 12.0,
+          ),
+        );
 
       await printer.printText(paragraph);
     }
@@ -94,10 +108,11 @@ class PrintAPI {
     }
   }
 
-  static Future<void> printPDF(BuildContext context, String filePath, {int pageNum = 1}) async {
+  static Future<void> printPDF(BuildContext context, String filePath,
+      {int pageNum = 1}) async {
     brother.Printer? printer = await configurePrinter(context);
 
-    if(printer != null) {
+    if (printer != null) {
       printer.printPdfFile(filePath, pageNum);
     }
   }
