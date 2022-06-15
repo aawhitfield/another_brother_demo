@@ -6,6 +6,5 @@ Starter code for printing on a wireless Brother printer from a Flutter app.
 
 A few resources to get you started:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Video: See the code in action with explanations](https://youtu.be/qYLMNV394Iw)
 
