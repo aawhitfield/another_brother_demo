@@ -104,7 +104,8 @@ class PrintAPI {
         return completer.complete(img);
       });
       ui.Image image = await completer.future;
-      printer.printImage(image);
+      await printer.printImage(image);
+      return;
     }
   }
 
@@ -113,7 +114,8 @@ class PrintAPI {
     brother.Printer? printer = await configurePrinter(context);
 
     if (printer != null) {
-      printer.printPdfFile(filePath, pageNum);
+      await printer.printPdfFile(filePath, pageNum);
+      return;
     }
   }
 }
